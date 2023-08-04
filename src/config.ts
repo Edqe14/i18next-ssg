@@ -1,13 +1,14 @@
-import path from "path";
-import { I18nConfig } from "./types";
+import path from 'path';
+import { I18nConfig } from './types';
 
-const isServer = typeof window === "undefined";
-
-const PATH = path.resolve("./next-i18next.config.js");
+const isServer = typeof window === 'undefined';
 
 let i18n = process.env.NEXT_PUBLIC_I18N as I18nConfig;
 
-if (isServer) i18n = require(PATH)?.i18n as I18nConfig;
+if (isServer) {
+  const PATH = path.resolve('./next-i18next.config.js');
+  i18n = require(PATH)?.i18n as I18nConfig;
+}
 
 if (i18n === undefined)
   throw new Error(
@@ -15,4 +16,4 @@ if (i18n === undefined)
   );
 
 export const locales = i18n?.locales ?? [];
-export const defaultLocale = i18n?.defaultLocale ?? "";
+export const defaultLocale = i18n?.defaultLocale ?? '';
