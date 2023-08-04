@@ -1,16 +1,16 @@
 {
-  "name": "i18next-ssg",
-  "version": "3.0.3",
+  "name": "@edqe/i18next-ssg",
+  "version": "3.0.4",
   "description": "i18n tool for next.js SSG",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Yrobot/i18next-ssg.git"
+    "url": "git@github.com:Edqe14/i18next-ssg.git"
   },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "homepage": "https://github.com/Yrobot/i18next-ssg",
+  "homepage": "https://github.com/Edqe14/i18next-ssg",
   "main": "dist/commonjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
@@ -38,13 +38,14 @@
     "next": "^13.4.2",
     "next-i18next": "^13.2.2",
     "react-i18next": "^12.2.2",
+    "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   },
   "peerDependencies": {
-    "next-i18next": "^13.2.0",
-    "react": "^18.0.0",
     "i18next": "^22.0.0",
     "next": "^13.0.0",
+    "next-i18next": "^13.2.0",
+    "react": "^18.0.0",
     "react-i18next": "^12.2.0"
   }
 }

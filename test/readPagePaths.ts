@@ -1,11 +1,11 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from 'fs/promises';
+import path from 'path';
 
-const readFilePaths = async (base: string = "", paths: string[] = []) => {
+const readFilePaths = async (base: string = '', paths: string[] = []) => {
   const files = await fs.readdir(base);
   await Promise.all(
     files.map(async (name) => {
-      const current = path.join(base, name);
+      const current = path.posix.join(base, name);
       const stat = await fs.stat(current);
       if (stat.isFile()) paths.push(current);
       if (stat.isDirectory()) await readFilePaths(current, paths);
@@ -25,17 +25,17 @@ const checkPathExists = async (path: string): Promise<boolean> =>
       })
   );
 
-const END_FIX = "/index";
+const END_FIX = '/index';
 
 const getPagePaths = async (): Promise<string[]> => {
-  const LOCALE_PATH_PREFIX = (await checkPathExists("pages"))
-    ? "pages/[locale]"
-    : "test/pages/[locale]";
+  const LOCALE_PATH_PREFIX = (await checkPathExists('pages'))
+    ? 'pages/[locale]'
+    : 'test/pages/[locale]';
 
   let paths: string[] = [];
   await readFilePaths(LOCALE_PATH_PREFIX, paths);
   paths = paths.map((p) => {
-    const endIndex = p.lastIndexOf(".");
+    const endIndex = p.lastIndexOf('.');
     // remove prefix and .ext
     let path = p.substring(
       LOCALE_PATH_PREFIX.length,
@@ -46,7 +46,7 @@ const getPagePaths = async (): Promise<string[]> => {
     if (path.endsWith(END_FIX))
       path = path.substring(0, path.length - END_FIX.length);
 
-    return path || "/";
+    return path || '/';
   });
   return paths;
 };

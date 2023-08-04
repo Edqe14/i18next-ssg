@@ -1,19 +1,19 @@
-import { getPathsArr } from "../utilities";
-import { readFilePaths, checkPathExists } from "./index";
+import { getPathsArr } from '../utilities';
+import { readFilePaths, checkPathExists } from './index';
 
-const END_FIX = "/index";
+const END_FIX = '/index';
 
 const getPagePaths = async (): Promise<string[]> => {
   // page files could under src dir
   // https://nextjs.org/docs/advanced-features/src-directory
-  const LOCALE_PATH_PREFIX = (await checkPathExists("pages"))
-    ? "pages/[locale]"
-    : "src/pages/[locale]";
+  const LOCALE_PATH_PREFIX = (await checkPathExists('pages'))
+    ? 'pages/[locale]'
+    : 'src/pages/[locale]';
 
   let paths: string[] = [];
   await readFilePaths(LOCALE_PATH_PREFIX, paths);
   paths = paths.map((p) => {
-    const endIndex = p.lastIndexOf(".");
+    const endIndex = p.lastIndexOf('.');
     // remove prefix and .ext
     let path = p.substring(
       LOCALE_PATH_PREFIX.length,
@@ -24,7 +24,10 @@ const getPagePaths = async (): Promise<string[]> => {
     if (path.endsWith(END_FIX))
       path = path.substring(0, path.length - END_FIX.length);
 
-    return path || "/";
+    path = path.replace(/\\\\/g, '/');
+    if (path === 'index') path = '';
+
+    return path || '';
   });
   return paths;
 };
