@@ -1,6 +1,6 @@
 {
   "name": "@edqe/i18next-ssg",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "i18n tool for next.js SSG",
   "repository": {
     "type": "git",
