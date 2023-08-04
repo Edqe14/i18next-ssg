@@ -1,10 +1,10 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import fs from "fs/promises";
-import path from "path";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import fs from 'fs/promises';
+import path from 'path';
 
-import { getPathsArr } from "../utilities";
-import { locales } from "../config";
-export * from "../types";
+import { getPathsArr } from '../utilities';
+import { locales } from '../config';
+export * from '../types';
 
 export const checkPathExists = async (path: string): Promise<boolean> =>
   new Promise(async (resolve) =>
@@ -19,13 +19,13 @@ export const checkPathExists = async (path: string): Promise<boolean> =>
   );
 
 export const readFilePaths = async (
-  base: string = "",
+  base: string = '',
   paths: string[] = []
 ) => {
   const files = await fs.readdir(base);
   await Promise.all(
     files.map(async (name) => {
-      const current = path.join(base, name);
+      const current = path.posix.join(base, name);
       const stat = await fs.stat(current);
       if (stat.isFile()) paths.push(current);
       if (stat.isDirectory()) await readFilePaths(current, paths);
@@ -47,7 +47,7 @@ export const getStaticPaths = () => ({
 
 type Context = Record<string, any>;
 
-async function getI18nProps(ctx: Context, ns: string[] = ["common"]) {
+async function getI18nProps(ctx: Context, ns: string[] = ['common']) {
   const locale = ctx?.params?.locale;
   return serverSideTranslations(locale, ns);
 }
